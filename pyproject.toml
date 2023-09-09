@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "holler"
+version = "0.1.0"
+authors = [
+    {name = "Nate Beach", email = "nate.beach@gmail.com"},
+]
+description = "A simple CLI utlity to post Slack messages."
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+]
+dependencies = [
+    "python-dotenv",
+    "slack-sdk",
+    "urllib3",
+]
+
+[project.scripts]
+holler = "holler.shell:_cli"
