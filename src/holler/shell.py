@@ -22,7 +22,7 @@ def _main(args: t.List[str]) -> int:
     token = os.environ.get("TOKEN")
     client = WebClient(token=token)
     channel_id = _get_channel_id(channel=parsed.channel, client=client)
-    kwargs = parsed.__dict__
+    kwargs = vars(parsed)
     kwargs.update({"text": " ".join(kwargs["text"])})
     kwargs.update({"channel": channel_id})
     client.chat_postMessage(**kwargs)
