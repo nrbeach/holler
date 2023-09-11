@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
+import getpass
 import os
 import typing as t
 from argparse import ArgumentParser
 from argparse import Namespace
+from pathlib import Path
 
 from dotenv import find_dotenv
 from dotenv import load_dotenv
@@ -11,9 +13,12 @@ from slack_sdk import WebClient
 
 def _main(args: t.List[str]) -> int:
     parsed = _parse_args(args)
-    dotenv_file = find_dotenv(".holler.env")
-    print(dotenv_file)
-    load_dotenv(dotenv_file)
+    user_dotenv = find_dotenv(str(Path.joinpath(Path.home(), ".holler.env")))
+    if not user_dotenv:
+        raise FileNotFoundError(
+            f"Could not find a '.holler.env' file in {getpass.getuser()}'s path."
+        )
+    load_dotenv(user_dotenv)
     token = os.environ.get("TOKEN")
     client = WebClient(token=token)
     channel_id = _get_channel_id(channel="host-status", client=client)
